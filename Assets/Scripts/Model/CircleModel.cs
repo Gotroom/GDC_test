@@ -21,6 +21,7 @@ namespace GDCTest
         [SerializeField] private int _defaultPoints = 100;
 
         private Bounds _cameraBounds;
+        private TimeController _timeController;
         private float _speed;
         private int _points;
         private bool _isInitialized;
@@ -28,6 +29,7 @@ namespace GDCTest
         protected override void Awake()
         {
             base.Awake();
+            _timeController = ServiceLocator.Resolve<TimeController>();
             _cameraBounds = CameraExtention.CameraBoundsToScreen(Camera.main);
             Initialize();
         }
@@ -57,7 +59,7 @@ namespace GDCTest
 
         public void Tick()
         {
-            transform.position += Vector3.up * _speed * Time.deltaTime;
+            transform.position += Vector3.up * _speed * Mathf.Pow(_timeController.TimerRelation, -1.0f) * Time.deltaTime;
             if (_isInitialized)
             {
                CheckBounds();

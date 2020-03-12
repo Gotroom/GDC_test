@@ -8,6 +8,11 @@ namespace GDCTest
     {
         public static Action TimerExpired;
 
+        public float TimerRelation
+        {
+            get => (_gameTime != 0 ? _gameTime : Constants.START_TIME) / Constants.START_TIME;
+        }
+
         private float _gameTime;
 
         public void Execute()
@@ -24,7 +29,7 @@ namespace GDCTest
 
         public void Initialize()
         {
-            _gameTime = 60.0f;
+            _gameTime = Constants.START_TIME;
         }
     }
 }
