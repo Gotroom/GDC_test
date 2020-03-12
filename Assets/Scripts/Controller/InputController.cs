@@ -4,24 +4,25 @@ using System;
 namespace GDCTest
 {
     public class InputController : BaseController, IExecutable
-    { 
+    {
+        public static Action CancelPressed;
+
         private int _mouseButton = (int)MouseButtons.LeftButton;
-
-        public InputController()
-        {
-
-        }
 
         public void Execute()
         {
             if (Input.GetMouseButtonDown(_mouseButton))
             {
-                CustomDebug.Log("clicked");
                 var selectedObject = ServiceLocator.Resolve<SelectionController>().SelectedObject;
                 if (selectedObject is IDestroyable destroyable)
                 {
                     destroyable.Destroy();
                 }
+            }
+
+            if (Input.GetButtonDown(Constants.CANCEL_KEY))
+            {
+                CancelPressed?.Invoke();
             }
         }
 

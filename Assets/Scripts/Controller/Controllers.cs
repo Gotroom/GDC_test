@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-
-namespace GDCTest
+﻿namespace GDCTest
 {
     public sealed class Controllers : IInitializable
     {
@@ -14,13 +11,20 @@ namespace GDCTest
         public Controllers()
         {
             ServiceLocator.SetService(new InputController());
+            ServiceLocator.SetService(new TimeController());
             ServiceLocator.SetService(new SelectionController());
+            ServiceLocator.SetService(new CirclesController());
+            ServiceLocator.SetService(new MenuController());
 
-            _executeControllers = new IExecutable[2];
+            _executeControllers = new IExecutable[4];
 
             _executeControllers[0] = ServiceLocator.Resolve<InputController>();
 
-            _executeControllers[1] = ServiceLocator.Resolve<SelectionController>();
+            _executeControllers[1] = ServiceLocator.Resolve<TimeController>();
+
+            _executeControllers[2] = ServiceLocator.Resolve<SelectionController>();
+
+            _executeControllers[3] = ServiceLocator.Resolve<CirclesController>();
 
         }
 
@@ -36,8 +40,12 @@ namespace GDCTest
                 }
             }
 
+            ServiceLocator.Resolve<MenuController>().Initialize();
+
             ServiceLocator.Resolve<InputController>().On();
+            ServiceLocator.Resolve<TimeController>().On();
             ServiceLocator.Resolve<SelectionController>().On();
+            ServiceLocator.Resolve<CirclesController>().On();
         }
     }
 }

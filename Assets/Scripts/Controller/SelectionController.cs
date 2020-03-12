@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+
 
 namespace GDCTest
 {
@@ -13,11 +13,6 @@ namespace GDCTest
         private readonly float _clickError = 0.2f;
         private ISelectable _selectedObj;
 
-        public SelectionController()
-        {
-
-        }
-
         public void Execute()
         {
             if (!IsActive)
@@ -30,12 +25,15 @@ namespace GDCTest
             {
                 SelectObject(collider.gameObject);
             }
+            else
+            {
+                _selectedObj = null;
+            }
         }
 
         private void SelectObject(GameObject obj)
         {
             _selectedObj = obj.GetComponent<ISelectable>();
-            CustomDebug.Log(_selectedObj.GetMessage());
         }
 
     }
